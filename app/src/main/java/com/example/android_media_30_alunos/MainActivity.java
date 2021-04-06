@@ -65,7 +65,7 @@ class Aluno implements Parcelable {
 }
 
 public class MainActivity extends AppCompatActivity {
-    ArrayList<String[]> notasAlunos = new ArrayList<>();
+    ArrayList<Aluno> notasAlunos = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class DataActivity extends AppCompatActivity {
-    ArrayList<Aluno> alunosNotas = new ArrayList<>();
+    ArrayList<Aluno> notasAlunos = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +19,7 @@ public class DataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_data);
 
         Bundle args = getIntent().getExtras();
-        alunosNotas = args.getParcelableArrayList("aluno");
+        notasAlunos = args.getParcelableArrayList("aluno");
 
         TextView tNome = (TextView) findViewById(R.id.dataNome);
         TextView tDtNasciemento = (TextView) findViewById(R.id.dataDtNascimento);
@@ -30,7 +30,7 @@ public class DataActivity extends AppCompatActivity {
         TextView tNota4 = (TextView) findViewById(R.id.dataNota4);
         TextView tMedia = (TextView) findViewById(R.id.dataMedia);
 
-        alunosNotas.forEach(aluno -> {
+        notasAlunos.forEach(aluno -> {
             tNome.setText(aluno.nome);
             tDtNasciemento.setText(aluno.dtNascimento);
             tEndereco.setText(aluno.endereco);
@@ -49,11 +49,11 @@ public class DataActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int length = alunosNotas.size();
-                if (length <= 30) {
+                int length = notasAlunos.size();
+                if (length <= 3) {
                     Intent myIntent = new Intent();
                     Bundle params = new Bundle();
-                    params.putParcelableArrayList("aluno", alunosNotas);
+                    params.putParcelableArrayList("aluno", notasAlunos);
                     myIntent.putExtras(params);
                     setResult(2, myIntent);
                     finish();
