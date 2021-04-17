@@ -24,15 +24,39 @@
 
 ---
 
-# Android Media 30 Alunos
+# Android
+## Android Media 30 Alunos
 
-## Instruções
-Alterar o programa anterior (https://github.com/KaduFloresta/Android_Media_Alunos) para uma aplicação com layout construído dinamicamente via API. Sua aplicação deve considerar as seguintes funcionalidades:
+### Instruções
+ - Alterar o programa anterior (https://github.com/KaduFloresta/Android_Media_Alunos) para uma aplicação com layout construído dinamicamente via API. Sua aplicação deve considerar as seguintes funcionalidades:
 
-- a) Opção de inserção das notas e 4 diferentes disciplinas para uma turma de no máximo 30 alunos;
+    - [X] a) Opção de inserção das notas e 4 diferentes disciplinas para uma turma de no máximo 30 alunos;
 
-- b) Exibição da média das notas de cada aluno;
+    - [X] b) Exibição da média das notas de cada aluno;
 
-- c) Exibição da média das notas de toda a turma.
+    - [X] c) Exibição da média das notas de toda a turma.
 
 ---
+
+**1. Componentes:**
+  - ImageView.
+  - TextView.
+  - Button.
+  - ListView.
+
+**2. Orientação de tela:**
+  - Portrait.
+  - Landscape.
+  - Uso do ScrollView no XML.
+ 
+**3. Posionaento dos componentes:**
+ - Constraint Widget.
+    - Match Constraints.
+    - Parent.
+    - Margin.
+ - Padding.
+ 
+ ---
+
+ # Prints do Aplicativo 
+ <img src="https://github.com/KaduFloresta/Android_Media_30_Alunos/blob/master/app/src/main/res/drawable/print.png" alt="drawing" width="360"/><img src="https://github.com/KaduFloresta/Android_Media_30_Alunos/blob/master/app/src/main/res/drawable/print2.png" alt="drawing" width="360"/>
