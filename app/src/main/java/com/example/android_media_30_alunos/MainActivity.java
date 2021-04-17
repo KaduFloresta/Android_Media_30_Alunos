@@ -4,148 +4,124 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-class Aluno implements Parcelable {
-    public String nome;
-    public String dtNascimento;
-    public String endereco;
-    public String[] notas;
-    public String media;
+import static java.lang.Float.parseFloat;
 
-    public Aluno(String nome, String dtNascimento, String endereco, String[] notas, String media) {
-        this.nome = nome;
-        this.dtNascimento = dtNascimento;
-        this.endereco = endereco;
-        this.notas = notas;
-        this.media = media;
-    }
-
-    protected Aluno(Parcel in) {
-        nome = in.readString();
-        dtNascimento = in.readString();
-        endereco = in.readString();
-        notas = in.createStringArray();
-        media = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(nome);
-        dest.writeString(dtNascimento);
-        dest.writeString(endereco);
-        dest.writeStringArray(notas);
-        dest.writeString(media);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<Aluno> CREATOR = new Creator<Aluno>() {
-        @Override
-        public Aluno createFromParcel(Parcel in) {
-            return new Aluno(in);
-        }
-
-        @Override
-        public Aluno[] newArray(int size) {
-            return new Aluno[size];
-        }
-    };
-}
 
 public class MainActivity extends AppCompatActivity {
-    ArrayList<Aluno> notasAlunos = new ArrayList<>();
+    List<Alunos> arrayAlunos = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btLogin = (Button) findViewById(R.id.btnCalcular);
-        btLogin.setOnClickListener(onClickLogin());
-    }
+        TextView tNome = (TextView) findViewById(R.id.inputNome);
+        TextView tDtNascimento = (TextView) findViewById(R.id.inputDtNascimento);
+        TextView tEndereco = (TextView) findViewById(R.id.inputEndereco);
 
-    private View.OnClickListener onClickLogin() {
-        return new View.OnClickListener() {
+        TextView tNota1 = (TextView) findViewById(R.id.inputNota1);
+        TextView tNota2 = (TextView) findViewById(R.id.inputNota2);
+        TextView tNota3 = (TextView) findViewById(R.id.inputNota3);
+        TextView tNota4 = (TextView) findViewById(R.id.inputNota4);
+        TextView dataMedia = (TextView) findViewById(R.id.dataMedia);
+
+        Button btnCalcular = (Button) findViewById(R.id.btnCalcular);
+        Button btnAddAluno = (Button) findViewById(R.id.btnAddAluno);
+        Button btnLimpar = (Button) findViewById(R.id.btnLimpar);
+        Button btnRelatorio = (Button) findViewById(R.id.btnRelatorio);
+
+        ListView listaAluno = new ListView(this);
+        // Construct the data source
+        ArrayList<Alunos> arrayOfAlunos = new ArrayList<Alunos>();
+        // Create the adapter to convert the array to views
+        AlunosAdapter adapter = new AlunosAdapter(this, arrayOfAlunos);
+        listaAluno.setAdapter(adapter);
+
+        // Regra para calcular a média
+        btnCalcular.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView tNome = (TextView) findViewById(R.id.inputNome);
-                TextView tDtNascimento = (TextView) findViewById(R.id.inputDtNascimento);
-                TextView tEndereco = (TextView) findViewById(R.id.inputEndereco);
-                TextView tNota1 = (TextView) findViewById(R.id.inputNota1);
-                TextView tNota2 = (TextView) findViewById(R.id.inputNota2);
-                TextView tNota3 = (TextView) findViewById(R.id.inputNota3);
-                TextView tNota4 = (TextView) findViewById(R.id.inputNota4);
+                Float nota1 = Float.parseFloat(tNota1.getText().toString());
+                Float nota2 = Float.parseFloat(tNota2.getText().toString());
+                Float nota3 = Float.parseFloat(tNota3.getText().toString());
+                Float nota4 = Float.parseFloat(tNota4.getText().toString());
+                Float media = ((nota1 + nota2 + nota3 + nota4) / 4);
 
-                String nome = tNome.getText().toString();
-                String dtNascimento = tDtNascimento.getText().toString();
-                String endereco = tEndereco.getText().toString();
+                dataMedia.setText("Média: " + media.toString());
+            }
+        });
 
-                float nota1 = Float.parseFloat(tNota1.getText().toString());
-                float nota2 = Float.parseFloat(tNota2.getText().toString());
-                float nota3 = Float.parseFloat(tNota3.getText().toString());
-                float nota4 = Float.parseFloat(tNota4.getText().toString());
-                float media = ((nota1 + nota2 + nota3 + nota4) / 4);
+        // Evento Limpar campos
+        btnLimpar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tNome.setText(null);
+                tDtNascimento.setText(null);
+                tEndereco.setText(null);
+                tNota1.setText(null);
+                tNota2.setText(null);
+                tNota3.setText(null);
+                tNota4.setText(null);
+            }
+        });
 
-                String[] notas = {
-                        String.valueOf(nota1),
-                        String.valueOf(nota2),
-                        String.valueOf(nota3),
-                        String.valueOf(nota4),
-                        String.valueOf(media)
-                };
-                Aluno aluno = new Aluno(nome, endereco, dtNascimento, notas, String.valueOf(media));
+        // Regra para nova nota de aluno
+        btnAddAluno.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Float nota1 = parseFloat(tNota1.getText().toString());
+                Float nota2 = parseFloat(tNota2.getText().toString());
+                Float nota3 = parseFloat(tNota3.getText().toString());
+                Float nota4 = parseFloat(tNota4.getText().toString());
+                Float media = (nota1 + nota2 + nota3 + nota4) / 4;
 
-                int length = notasAlunos.size() + 1;
-                notasAlunos.add(aluno);
-                // arrayList que armazena todos os alunos com suas respectivas informações
-                if (length <= 30) {
-                    Intent intent = new Intent(MainActivity.this, DataActivity.class);
-                    Bundle params = new Bundle();
-                    params.putParcelableArrayList("aluno", notasAlunos);
-                    intent.putExtras(params);
-                    startActivityForResult(intent, 2);
-                } else {
-                    throw new Error("Limite 30 alunos");
+                // Add item to adapter
+                Alunos newAluno = new Alunos(
+                        tNome.getText().toString(),
+                        tDtNascimento.getText().toString(),
+                        tEndereco.getText().toString(),
+                        (float) media);
+                arrayAlunos.add(newAluno);
+
+                adapter.clear();
+                for (Alunos a : arrayAlunos) {
+                    float dataMedia = a.getMedia();
+                    adapter.add(a);
                 }
             }
-        };
+        });
+
+        // Relatorio
+        btnRelatorio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("TESTE", " Entrou aqui Primeiro: " + arrayAlunos.size());
+                Intent intent = new Intent(MainActivity.this, DataActivity.class);
+                Bundle params = new Bundle();
+                params.putParcelableArrayList("array", (ArrayList<? extends Parcelable>) arrayAlunos);
+                intent.putExtras(params);
+                startActivityForResult(intent, 2);
+            }
+        });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        //Verifica se o requestCode recebido é o mesmo que o enviado
         if (requestCode == 2) {
-            Intent it = data;
-            if (it != null) {
-                TextView tNome = (TextView) findViewById(R.id.inputNome);
-                TextView tDtNascimento = (TextView) findViewById(R.id.inputDtNascimento);
-                TextView tEndereco = (TextView) findViewById(R.id.inputEndereco);
-                TextView tNota1 = (TextView) findViewById(R.id.inputNota1);
-                TextView tNota2 = (TextView) findViewById(R.id.inputNota2);
-                TextView tNota3 = (TextView) findViewById(R.id.inputNota3);
-                TextView tNota4 = (TextView) findViewById(R.id.inputNota4);
-                tNome.setText("");
-                tDtNascimento.setText("");
-                tEndereco.setText("");
-                tNota1.setText("");
-                tNota2.setText("");
-                tNota3.setText("");
-                tNota4.setText("");
-                Bundle args = it.getExtras();
-                notasAlunos = args.getParcelableArrayList("aluno");
-            }
+            //Testa o retorno da activity
         }
     }
 }
