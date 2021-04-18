@@ -20,7 +20,7 @@ public class DataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_data);
 
         ListView listaAluno = (ListView) findViewById(R.id.listaAlunos);
-        TextView media = (TextView) findViewById(R.id.dataMedia);
+        TextView mediaTurma = (TextView) findViewById(R.id.dataMediaTurma);
 
         Button btnVoltar = (Button) findViewById(R.id.btnVoltar);
 
@@ -46,6 +46,6 @@ public class DataActivity extends AppCompatActivity {
             soma += a.getMedia();
             cont++;
         }
-        media.setText("Media: " + String.format("%.2f",soma / cont));
+        mediaTurma.setText("Media: " + String.format("%.2f",soma / cont));
     }
 }

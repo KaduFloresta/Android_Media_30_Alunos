@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,10 +25,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:gravity="center_horizontal"
+            android:gravity="right"
             android:text="Data de Nascimento"
-            android:textAlignment="textEnd"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -50,9 +49,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="2"
-            android:gravity="center_horizontal"
+            android:gravity="right"
             android:text="Média"
-            android:textAlignment="textEnd"
             android:textSize="18sp"
             android:textStyle="bold" />
     </LinearLayout>
